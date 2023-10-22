@@ -1,17 +1,55 @@
 package com.base;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import com.utility.Utility;
 
 public class baseclass {
 
-	public static void main(String[] args) {
+	public static WebDriver driver;
+	public static Properties prop;
+	
+	
+  public static void launchTheWeb()
+	
+	 
+    {
+		 FileInputStream file=null;;
+			try {
+				File src = new File("C:\\Users\\Admin\\eclipse-workspace\\Bankingdomain\\src\\main\\resources\\Property\\configure.properties");
+				file = new FileInputStream( src);
+			} catch (FileNotFoundException e) {
+				
+				e.printStackTrace();
+			}
+			   prop= new Properties();
+			   try {
+				prop.load(file);
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}   // load properties file
+	
+    	
+    	driver= new ChromeDriver();
+    	
+    	driver.manage().window().maximize();
+    	Utility.implicit_Wait();
+    	driver.get(prop.getProperty("url"));
+    	
+    }  	
+
 		
-		WebDriver driver=new ChromeDriver();
-		driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-		driver.manage().window().maximize();
 		
 
 	}
 
-}
+
